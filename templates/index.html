@@ -49,7 +49,50 @@
 
         <div class="content container">
             {% block content %}
+              <h1>{{ section.title }}</h1>
+              {{ section.content | safe }}
+
+              {% if section.pages %}
                 <div class="posts">
+                    <!-- Render a list of sub-sections -->
+                    {% for section in section.subsections %}
+                      <div class="post">
+                        <h1 class="post-title">
+                          <a href="{{ page.permalink }}">
+                            {{ section.title }}
+                          </a>
+                        </h1>
+                        
+                        <span class="post-date">
+                            <script>
+                                console.log(JSON.stringify('{{ section.subsections }}'))
+                            
+                            </script>
+
+                            {%- if section.subsections -%}
+                                {% if section.pages %}
+                                    {{ section.pages | length }} Pages1, {{section.subsections | length}} Sections
+                                {% else %}
+                                    {{ section.subsections | length }} Sections
+                                {% endif %}
+                            {%- elif section.pages -%}
+                                {{ section.pages | length }} Pages
+                            {%- else -%}
+                                Empty
+                            {% endif %}
+                        </span>
+
+                        <span class="post-summary">
+                          {% if section.summary %}
+                          {{ section.summary | safe }}
+                          {% elif section.description %}
+                          {{ section.description | safe }}
+                          {% endif %}
+                        </span>
+                      </div>
+                    {% endfor %}
+
+                    <!-- Render a list of pages in this section -->
                     {% for page in section.pages | reverse %}
                       <div class="post">
                         <h1 class="post-title">
@@ -59,9 +102,18 @@
                         </h1>
 
                         <span class="post-date">{{ page.date | date(format="%Y-%m-%d") }}</span>
+
+                        <span class="post-summary">
+                          {% if page.summary %}
+                          {{ page.summary | safe }}
+                          {% elif page.description %}
+                          {{ page.description | safe }}
+                          {% endif %}
+                        </span>
                       </div>
                     {% endfor %}
                 </div>
+              {% endif %}
             {% endblock content %}
         </div>
 
