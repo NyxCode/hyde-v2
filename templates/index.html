@@ -52,15 +52,14 @@
               <h1>{{ section.title }}</h1>
               {{ section.content | safe }}
 
-              {% if section.pages %}
                 <div class="posts">
                     <!-- Render a list of sub-sections -->
                     {% for section in section.subsections %}
-                      <div class="post">
+                        <div class="post">
                         <h1 class="post-title">
-                          <a href="{{ page.permalink }}">
+                            <a href="{{ page.permalink }}">
                             {{ section.title }}
-                          </a>
+                            </a>
                         </h1>
                         
                         <span class="post-date">
@@ -83,14 +82,15 @@
                         </span>
 
                         <span class="post-summary">
-                          {% if section.summary %}
-                          {{ section.summary | safe }}
-                          {% elif section.description %}
-                          {{ section.description | safe }}
-                          {% endif %}
+                            {% if section.summary %}
+                            {{ section.summary | safe }}
+                            {% elif section.description %}
+                            {{ section.description | safe }}
+                            {% endif %}
                         </span>
-                      </div>
+                        </div>
                     {% endfor %}
+                
 
                     <!-- Render a list of pages in this section -->
                     {% for page in section.pages | reverse %}
@@ -113,7 +113,6 @@
                       </div>
                     {% endfor %}
                 </div>
-              {% endif %}
             {% endblock content %}
         </div>
 
