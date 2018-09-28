@@ -1,121 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
-      <!-- Enable responsiveness on mobile devices-->
-      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
-      <title>{% block title %}{{ config.title }}{% endblock title %}</title>
+    <!-- Enable responsiveness on mobile devices-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
-      <!-- CSS -->
-      <link rel="stylesheet" href="{{ get_url(path="print.css", trailing_slash=false) }}" media="print">
-      <link rel="stylesheet" href="{{ get_url(path="poole.css", trailing_slash=false) }}">
-      <link rel="stylesheet" href="{{ get_url(path="hyde.css", trailing_slash=false) }}">
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+    <title>{% block title %}{{ config.title }}{% endblock title %}</title>
 
-      {% if config.generate_rss %}
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ get_url(path="print.css", trailing_slash=false) }}" media="print">
+    <link rel="stylesheet" href="{{ get_url(path="poole.css", trailing_slash=false) }}">
+    <link rel="stylesheet" href="{{ get_url(path="hyde.css", trailing_slash=false) }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+    {% if config.generate_rss %}
         <link rel="alternate" type="application/rss+xml" title="RSS" href="{{ get_url(path="rss.xml", trailing_slash=false) }}">
-      {% endif %}
+    {% endif %}
 
-      {% block extra_head %}
-      {% endblock extra_head %}
-    </head>
+    {% block extra_head %}
+    {% endblock extra_head %}
+</head>
 
-    <body class="{{ config.extra.hyde_theme }} {% if config.extra.hyde_reverse %}layout-reverse{% endif %}">
-        {% block sidebar %}
-            <div class="sidebar">
-                <div class="container {% if config.extra.hyde_sticky %}sidebar-sticky{% endif %}">
-                    <div class="sidebar-about">
-                        {% block sidebar_about %}
-                            <a href="{{ config.base_url }}"><h1>{{ config.title }}</h1></a>
-                            {% if config.description %}
-                            <p class="lead">{{config.description}}</p>
-                            {% endif %}
-                        {% endblock sidebar_about %}
-                    </div>
-
-                    <ul class="sidebar-nav">
-                        {% block sidebar_nav %}
-                        {% for link in config.extra.hyde_links %}
-                        <li class="sidebar-nav-item"><a href="{{link.url}}">{{link.name}}</a></li>
-                        {% endfor %}
-                        {% endblock sidebar_nav %}
-                    </ul>
-                </div>
+<body class="{% if config.extra.hyde_theme %}{{ config.extra.hyde_theme }}{% endif %} {% if config.extra.hyde_reverse %}layout-reverse{% endif %}">
+    {% block sidebar %}
+    <div class="sidebar themed-bg">
+        <div class="container {% if config.extra.hyde_sticky %}sidebar-sticky{% endif %}">
+            <div class="sidebar-about">
+                {% block sidebar_about %}
+                    <a href="{{ config.base_url }}">
+                        <h1>{{ config.title }}</h1>
+                    </a>
+                    {% if config.description %}
+                        <p class="lead">{{config.description}}</p>
+                    {% endif %}
+                {% endblock sidebar_about %}
             </div>
-        {% endblock sidebar %}
 
-        <div class="content container">
-            {% block content %}
-              <h1>{{ section.title }}</h1>
-              {{ section.content | safe }}
-
-                <div class="posts">
-                    <!-- Render a list of sub-sections -->
-                    {% for section in section.subsections %}
-                        <div class="post">
-                        <h1 class="post-title">
-                            <a href="{{ page.permalink }}">
-                            {{ section.title }}
-                            </a>
-                        </h1>
-                        
-                        <span class="post-date">
-                            <script>
-                                console.log(JSON.stringify('{{ section.subsections }}'))
-                            
-                            </script>
-
-                            {%- if section.subsections -%}
-                                {% if section.pages %}
-                                    {{ section.pages | length }} Pages, {{section.subsections | length}} Sections
-                                {% else %}
-                                    {{ section.subsections | length }} Sections
-                                {% endif %}
-                            {%- elif section.pages -%}
-                                {{ section.pages | length }} Pages
-                            {%- else -%}
-                                Empty
-                            {% endif %}
-                        </span>
-
-                        <span class="post-summary">
-                            {% if section.summary %}
-                            {{ section.summary | safe }}
-                            {% elif section.description %}
-                            {{ section.description | safe }}
-                            {% endif %}
-                        </span>
-                        </div>
+            <ul class="sidebar-nav">
+                {% block sidebar_nav %}
+                    {% for link in config.extra.hyde_links %}
+                        <li class="sidebar-nav-item"><a href="{{link.url}}">{{link.name}}</a></li>
                     {% endfor %}
-                
-
-                    <!-- Render a list of pages in this section -->
-                    {% for page in section.pages | reverse %}
-                      <div class="post">
-                        <h1 class="post-title">
-                          <a href="{{ page.permalink }}">
-                            {{ page.title }}
-                          </a>
-                        </h1>
-
-                        <span class="post-date">{{ page.date | date(format="%Y-%m-%d") }}</span>
-
-                        <span class="post-summary">
-                          {% if page.summary %}
-                          {{ page.summary | safe }}
-                          {% elif page.description %}
-                          {{ page.description | safe }}
-                          {% endif %}
-                        </span>
-                      </div>
-                    {% endfor %}
-                </div>
-            {% endblock content %}
+                {% endblock sidebar_nav %}
+            </ul>
         </div>
+    </div>
+    {% endblock sidebar %}
 
-    </body>
+    <div class="content container">
+        {%- block content -%}
+        {%- if section.title -%}
+        <h1 class="section-header">{{ section.title }}</h1>
+        {% endif %}
+
+        {{ section.content | safe }}
+
+        <div class="posts">
+            <!-- Render a list of sub-sections -->
+            {% if section.subsections %}
+            <div class="sections themed-bg">
+                {% for section in section.subsections %}
+                <div class="section {% if config.extra.hyde_theme %}{{ config.extra.hyde_theme }}{% endif %}">
+                    <h1 class="post-title">
+                        <a href="{{ page.permalink }}">
+                            {{ section.title }}
+                        </a>
+                    </h1>
+
+                    <span class="section-content">
+                        {%- if section.pages | length == 0 -%}
+                            {%- if section.subsections | length == 0 -%}
+                                Empty
+                            {%- elif section.subsections | length == 1 -%}
+                                1 Section
+                            {%- else -%}
+                                {{section.subsections | length}} Sections
+                            {%- endif -%}
+                            
+                        {%- elif section.pages | length == 1 -%}
+                            {%- if section.subsections | length == 0 -%}
+                                1 Page
+                            {%- elif section.subsections | length == 1 -%}
+                                1 Page and 1 Section
+                            {%- else -%}
+                                1 Page and {{section.subsections | length}} Sections
+                            {%- endif -%}
+                        {%- else -%}
+                            {{section.pages | length}} Pages
+                            {%- if section.subsections | length == 1 -%}
+                                {{ " and 1 Section" }}
+                            {% else %}
+                                {{ " and" }} {{section.subsections | length}} Sections
+                            {% endif %}
+                        {%- endif -%}
+
+                    </span>
+
+                    <span class="post-summary">
+                        {%- if section.summary -%}
+                            {{ section.summary | safe }}
+                        {%- elif section.description -%}
+                            {{ section.description | safe }}
+                        {%- endif -%}
+                    </span>
+                </div>
+                {% endfor %}
+                <div class="last-section"></div>
+
+            </div>
+            {% endif %}
+
+            <!-- Render a list of pages in this section -->
+            {% for page in section.pages %}
+            <div class="post">
+                <h1 class="post-title">
+                    <a href="{{ page.permalink }}">
+                        {{ page.title }}
+                    </a>
+                </h1>
+
+                <span class="post-date">
+                    {{ page.date | date(format=config.extra.hyde_date_format) }}
+                </span>
+
+                <span class="post-summary">
+                    {%- if page.summary -%}
+                        {{ page.summary | safe }}
+                    {%- elif page.description -%}
+                        {{ page.description | safe }}
+                    {% endif %}
+                </span>
+            </div>
+            {% endfor %}
+        </div>
+        {% endblock content %}
+    </div>
+
+</body>
 
 </html>

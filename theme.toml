@@ -1,22 +1,29 @@
-name = "hyde"
+name = "hyde-revamped"
 description = "A classic blog theme"
 license = "MIT"
-homepage = "https://github.com/Keats/gutenberg-hyde"
+homepage = "https://github.com/NyxCode/hyde-revamped"
 min_version = "0.4"
-demo = "https://gutenberg-hyde.netlify.com"
 
 [extra]
 hyde_sticky = true
 hyde_reverse = false
+hyde_links = []
+hyde_date_format = "%d.%m.%Y"
 hyde_theme = ""
-hyde_links = [
-]
+# hyde_theme = "theme-base-08"
+# hyde_theme = "theme-base-09"
+# hyde_theme = "theme-base-0a"
+# hyde_theme = "theme-base-0b"
+# hyde_theme = "theme-base-0c"
+# hyde_theme = "theme-base-0d"
+# hyde_theme = "theme-base-0e"
+# hyde_theme = "theme-base-0f"
 
 [author]
-name = "Vincent Prouillet"
-homepage = "https://vincent.is"
+name = "NyxCode"
+homepage = "https://github.com/NyxCode/"
 
 [original]
-author =  "mdo"
-homepage = "http://markdotto.com/"
-repo = "https://www.github.com/mdo/hyde"
+author = "Vincent Prouillet"
+homepage = "https://vincent.is"
+repo = "https://www.github.com/Keats/hyde"
