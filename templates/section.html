@@ -41,6 +41,15 @@
 
             <ul class="sidebar-nav">
                 {% block sidebar_nav %}
+                  <div class="sidebar-sections">
+                    {% set root_section = get_section(path="_index.md") %}
+                    {% for _top_level_section in root_section.subsections %}
+                    {% set top_level_section = get_section(path=_top_level_section) %}
+                    <li class="sidebar-nav-item"><a href="{{top_level_section.permalink}}">{{top_level_section.title}}</a></li>
+                    {% endfor %}
+                  </div>
+
+
                     {% for link in config.extra.hyde_links %}
                         <li class="sidebar-nav-item"><a href="{{link.url}}">{{link.name}}</a></li>
                     {% endfor %}
@@ -62,10 +71,11 @@
             <!-- Render a list of sub-sections -->
             {% if section.subsections %}
             <div class="sections themed-bg">
-                {% for section in section.subsections %}
+                {% for _section in section.subsections %}
+                {% set section = get_section(path=_section) %}
                 <div class="section {% if config.extra.hyde_theme %}{{ config.extra.hyde_theme }}{% endif %}">
                     <h1 class="post-title">
-                        <a href="{{ page.permalink }}">
+                        <a href="{{ section.permalink }}">
                             {{ section.title }}
                         </a>
                     </h1>
@@ -79,7 +89,7 @@
                             {%- else -%}
                                 {{section.subsections | length}} Sections
                             {%- endif -%}
-                            
+
                         {%- elif section.pages | length == 1 -%}
                             {%- if section.subsections | length == 0 -%}
                                 1 Page
@@ -138,7 +148,6 @@
         </div>
         {% endblock content %}
     </div>
-
 </body>
 
 </html>
