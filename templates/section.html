@@ -41,14 +41,13 @@
 
             <ul class="sidebar-nav">
                 {% block sidebar_nav %}
-                  <div class="sidebar-sections">
-                    {% set root_section = get_section(path="_index.md") %}
-                    {% for _top_level_section in root_section.subsections %}
-                    {% set top_level_section = get_section(path=_top_level_section) %}
-                    <li class="sidebar-nav-item"><a href="{{top_level_section.permalink}}">{{top_level_section.title}}</a></li>
-                    {% endfor %}
-                  </div>
-
+                    <div class="sidebar-sections">
+                      {% set root_section = get_section(path="_index.md") %}
+                      {% for _top_level_section in root_section.subsections %}
+                        {% set top_level_section = get_section(path=_top_level_section) %}
+                        <li class="sidebar-nav-item"><a href="{{top_level_section.permalink}}">{{top_level_section.title}}</a></li>
+                      {% endfor %}
+                    </div>
 
                     {% for link in config.extra.hyde_links %}
                         <li class="sidebar-nav-item"><a href="{{link.url}}">{{link.name}}</a></li>
@@ -62,7 +61,7 @@
     <div class="content container">
         {%- block content -%}
         {%- if section.title -%}
-        <h1 class="section-header">{{ section.title }}</h1>
+          <h1 class="section-header">{{ section.title }}</h1>
         {% endif %}
 
         {{ section.content | safe }}
@@ -98,15 +97,15 @@
                             {%- else -%}
                                 1 Page and {{section.subsections | length}} Sections
                             {%- endif -%}
+
                         {%- else -%}
                             {{section.pages | length}} Pages
                             {%- if section.subsections | length == 1 -%}
                                 {{ " and 1 Section" }}
-                            {% else %}
+                            {% elif section.subsections | length > 1 %}
                                 {{ " and" }} {{section.subsections | length}} Sections
                             {% endif %}
                         {%- endif -%}
-
                     </span>
 
                     <span class="post-summary">
