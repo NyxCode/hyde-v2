@@ -1,9 +1,9 @@
 +++
-title = "And here's another post"
-date = 2017-09-24
+title = "post-2"
+date = 2017-09-25
 +++
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eu feugiat sapien. Aenean ligula nunc, laoreet id sem in, interdum bibendum felis. 
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eu feugiat sapien. Aenean ligula nunc, laoreet id sem in, interdum bibendum felis.
 
 <!-- more -->
 
