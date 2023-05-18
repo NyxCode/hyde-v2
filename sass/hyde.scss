@@ -31,6 +31,10 @@
  * Update the foundational and global aspects of the page.
  */
 
+.zola-anchor {
+  color: inherit;
+}
+
 html {
   font-family: "PT Sans", Helvetica, Arial, sans-serif;
 }
